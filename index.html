@@ -16,7 +16,12 @@
 
     <form id="excerciseForm">
         <label for="function-name">Funkcia:</label>
-        <input type="text" id="function-name">
+        <input type="text" list="functions" id="function-name">
+        <datalist id=functions>
+            <option value="getAllText"></option>
+            <option value="sortAllTextAphabetically"></option>
+            <option value="setFromTextAphabetically"></option>
+        </datalist>
         <button type="submit"> Vykonat funkciu</button>
     </form>
 

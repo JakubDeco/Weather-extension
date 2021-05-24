@@ -12,6 +12,9 @@ chrome.runtime.onMessage.addListener(
             if (message.functionName === 'sortAllTextAphabetically') {
                 sendResponse(sortAllTextAphabetically())
             }
+            if (message.functionName === 'setFromTextAphabetically') {
+                sendResponse(setFromTextAphabetically())
+            }
         }
     }
 )
@@ -29,6 +32,7 @@ function getAllText() {
 }
 
 function sortAllTextAphabetically() {
+    console.log('sortAllTextAphabetically')
     const text = document.body.innerText
     const wordsArr = text.split(/\s+/).sort()
     let result;
@@ -37,5 +41,25 @@ function sortAllTextAphabetically() {
     for (i = 0; i < wordsArr.length; i++) {
         result += wordsArr[i] + "<br>";
     }
+    return result
+}
+
+function setFromTextAphabetically(){
+    console.log('setFromTextAphabetically')
+    const text = document.body.innerText
+    const wordsArr = text.split(/\s+/).sort()
+
+    const set = new Set()
+
+    wordsArr.forEach(element => {
+        set.add(element)
+    });
+
+    console.log(set)
+    let result;
+
+    set.forEach(element => {
+        result += element + "<br>"
+    })
     return result
 }
