@@ -15,6 +15,9 @@ chrome.runtime.onMessage.addListener(
             if (message.functionName === 'setFromTextAphabetically') {
                 sendResponse(setFromTextAphabetically())
             }
+            if (message.functionName === 'sortWordsByCount') {
+                sendResponse(sortWordsByCount())
+            }
         }
     }
 )
@@ -61,5 +64,24 @@ function setFromTextAphabetically(){
     set.forEach(element => {
         result += element + "<br>"
     })
+    return result
+}
+
+function sortWordsByCount(){
+    console.log('sortWordsByCount')
+    const text = document.body.innerText
+    const wordsMap = text.split(/\s+/).reduce(function(map, word){
+        map[word] = (map[word]||0)+1;
+        return map;
+    }, Object.create(null));
+    
+    const sortedArr = Object.entries(wordsMap).sort((a,b) => b[1]-a[1])
+    
+    let result;
+
+    var i;
+    for (i = 0; i < sortedArr.length; i++) {
+        result += sortedArr[i][1] + " " + sortedArr[i][0]  + "<br>";
+    }
     return result
 }
