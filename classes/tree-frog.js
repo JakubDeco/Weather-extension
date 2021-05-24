@@ -9,6 +9,12 @@ export class TreeFrog extends Animal {
         this.weatherForm = document.getElementById("weatherForm")
         this.colorForm = document.getElementById("colorForm")
         this.contentScriptTabId = contentScriptTabId
+        this.excerciseForm = document.getElementById('excerciseForm')
+
+        this.excerciseForm.addEventListener('submit', (e) => {
+            e.preventDefault()
+            this.sendFunctionNameMessage()
+        })
 
         this.weatherForm.addEventListener("submit", (e) => {
             e.preventDefault()
@@ -16,6 +22,7 @@ export class TreeFrog extends Animal {
         })
 
         this.colorForm.addEventListener("submit", (e) => {
+            e.preventDefault()
             this.sendMessageToHighlightElements()
         })
 
@@ -25,6 +32,17 @@ export class TreeFrog extends Animal {
         chrome.storage.sync.get(['geoAPIKey'], (url) => {
             this.geoKey = url.geoAPIKey;
         });
+    }
+
+    sendFunctionNameMessage(){
+        const functionName = document.getElementById('function-name').value
+        chrome.tabs.sendMessage(
+            this.contentScriptTabId,
+            { type: 'function-name', functionName: functionName },
+            (resp) => {
+                document.getElementById('exercise').innerHTML = resp
+            }
+        )
     }
 
     myTabId() {
